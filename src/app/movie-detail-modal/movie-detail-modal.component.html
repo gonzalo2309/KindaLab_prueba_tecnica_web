@@ -1,0 +1,32 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>{{ data.movie.title }} ({{ data.movie.releaseYear }})</h2>
+    <button class="close-button" (click)="closeDialog()">✖</button>
+  </div>
+
+  <div class="modal-content">
+    <!-- Información de la película -->
+    <div class="movie-details">
+      <p><strong>Director:</strong> {{ data.movie.director }}</p>
+      <p><strong>Writer:</strong> {{ data.movie.writer }}</p>
+      <p><strong>Production Company:</strong> {{ data.movie.productionCompany }}</p>
+      <p><strong>Distributor:</strong> {{ data.movie.distributor }}</p>
+      <p><strong>State:</strong> {{ data.movie.state }}</p>
+      <p><strong>City:</strong> {{ data.movie.city }}</p>
+      <p><strong>Fun Facts:</strong> {{ data.movie.funFacts }}</p>
+      <p><strong>Actors:</strong>
+        {{ data.movie.actor1 }}{{ data.movie.actor2 ? ', ' + data.movie.actor2 : '' }}{{ data.movie.actor3 ? ', ' + data.movie.actor3 : '' }}
+      </p>
+    </div>
+
+    <!-- Ubicaciones de la película -->
+    <div class="movie-locations">
+      <h3>Movie Locations:</h3>
+
+
+
+    <!-- Mapa de las ubicaciones -->
+    <app-map [movie]="data.movie"></app-map>
+  </div>
+  </div>
+</div>

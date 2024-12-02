@@ -1,0 +1,80 @@
+<h1>Movies</h1>
+
+<div class="search-container">
+  <mat-form-field class="search-field">
+    <input
+      matInput
+      [(ngModel)]="query"
+      [matAutocomplete]="auto"
+      placeholder="Search for a movie..."
+      (input)="onSearchChange()"
+      (keydown)="handleKeyDown($event)"
+    />
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+      <mat-option *ngFor="let suggestion of filteredMovies" [value]="suggestion">
+        {{ suggestion }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button (click)="searchMovies()" class="search-button">Search</button>
+</div>
+
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner"></div>
+</div>
+
+
+<div *ngIf="error && !loading" class="error-container">
+    <p>{{ error }}</p>
+</div>
+
+<div *ngIf="!loading && movies.length === 0 && !error" class="no-results">
+    <p>No movies found.</p>
+</div>
+
+<div *ngIf="!loading && movies.length > 0 && !error" >
+  <p>{{movies.length}} movies found.</p>
+</div>
+
+<table class="movies-table" *ngIf="!error && movies.length > 0 && !loading">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>year</th>
+            <th>Director</th>
+            <th>Production Company</th>
+            <th>Distributor</th>
+            <th>Actors</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let movie of movies">
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.releaseYear }}</td>
+            <td>{{ movie.director }}</td>
+            <td>{{ movie.productionCompany }}</td>
+            <td>{{ movie.distributor }}</td>
+            <td>
+                {{ movie.actor1 }}{{ movie.actor2 ? ', ' + movie.actor2 : '' }}{{ movie.actor3 ? ', ' + movie.actor3 : '' }}
+            </td>
+            <td>
+              <ul>
+
+                <button class="map-button" (click)="showDetails(movie)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8a13.133 13.133 0 0 1-1.66 2.043C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.133 13.133 0 0 1 1.172 8z"/>
+                    <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+                    <path d="M8 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>
+                  </svg>
+                  View
+                </button>
+
+              </ul>
+
+
+
+          </td>
+        </tr>
+    </tbody>
+</table>
